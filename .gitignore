@@ -30,4 +30,4 @@ logs/
 *.csv
 *.parquet
 *.json
-data/
+dataset/
