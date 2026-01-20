@@ -30,6 +30,7 @@ logs/
 *.csv
 *.parquet
 *.json
-data/
+data_clean/
 data/
 notes.odt
+.~lock.notes.odt#
