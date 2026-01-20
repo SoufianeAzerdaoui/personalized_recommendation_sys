@@ -31,6 +31,22 @@ logs/
 *.parquet
 *.json
 data_clean/
-data/
+dataset/
 notes.odt
 .~lock.notes.odt#
+<<<<<<< HEAD
+=======
+
+
+
+# LibreOffice locks
+.~lock.*#
+
+# Temporary files
+*.tmp
+*.bak
+
+# Linux/Ubuntu metadata
+.directory
+.Trash-*S
+>>>>>>> f857e23 (chore: remove data and lock files from tracking)
