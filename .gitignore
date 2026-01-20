@@ -31,3 +31,5 @@ logs/
 *.parquet
 *.json
 data/
+data/
+notes.odt
