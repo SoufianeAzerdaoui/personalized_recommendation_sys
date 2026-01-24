@@ -34,8 +34,6 @@ data_clean/
 dataset/
 notes.odt
 .~lock.notes.odt#
-<<<<<<< HEAD
-=======
 
 
 
@@ -49,4 +47,3 @@ notes.odt
 # Linux/Ubuntu metadata
 .directory
 .Trash-*S
->>>>>>> f857e23 (chore: remove data and lock files from tracking)
