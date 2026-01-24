@@ -31,6 +31,19 @@ logs/
 *.parquet
 *.json
 data_clean/
-data/
+dataset/
 notes.odt
 .~lock.notes.odt#
+
+
+
+# LibreOffice locks
+.~lock.*#
+
+# Temporary files
+*.tmp
+*.bak
+
+# Linux/Ubuntu metadata
+.directory
+.Trash-*S
