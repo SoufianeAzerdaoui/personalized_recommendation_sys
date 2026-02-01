@@ -32,7 +32,7 @@ def build_gold_item_features(input_path: str, output_path: str):
         & F.col("user_id").isNotNull()
         & F.col("product_id").isNotNull()
         & F.col("event_time").isNotNull()
-        & (F.col("price").isNull() | (F.col("price") > 0))  # prix peut être null mais si présent >0
+        & (F.col("price").isNull() | (F.col("price") > 0)) 
     )
 
     # -----------------------------
@@ -56,21 +56,22 @@ def build_gold_item_features(input_path: str, output_path: str):
     # -----------------------------
     agg = (
         df2.groupBy("product_id")
-           .agg(
-               # Popularité
-               F.sum("is_interaction").alias("total_interactions"),
-               F.sum("is_purchase").alias("total_purchases"),
-               (F.sum("is_purchase") / F.when(F.sum("is_interaction") > 0, F.sum("is_interaction")).otherwise(F.lit(None))).alias("purchase_rate"),
-
-               # Pricing
-               F.avg("price").alias("avg_price"),
-               F.min("price").alias("min_price"),
-               F.max("price").alias("max_price"),
-
-               # Récence
-               F.max("event_time").alias("last_event_time"),
-           )
+            .agg(
+                F.sum("is_interaction").cast("long").alias("total_interactions"),
+                F.sum("is_purchase").cast("long").alias("total_purchases"),
+                F.avg("price").alias("avg_price"),
+                F.min("price").alias("min_price"),
+                F.max("price").alias("max_price"),
+                F.max("event_time").alias("last_event_time"),
+            )
+            .withColumn(
+                "purchase_rate",
+                F.when(F.col("total_interactions") > 0,
+                        F.col("total_purchases") / F.col("total_interactions"))
+                    .otherwise(F.lit(0.0))
+            )
     )
+
 
     # -----------------------------
     # 4) Metadata (category_code / brand / main_category)
