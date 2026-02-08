@@ -33,9 +33,11 @@ def main():
         spark.readStream.format("kafka")
         .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP)
         .option("subscribe", TOPIC)
-        .option("startingOffsets", "latest")
+        .option("startingOffsets", "earliest")
+        .option("failOnDataLoss", "false")
         .load()
     )
+
 
     parsed = (
         raw.select(F.col("value").cast("string").alias("json_str"))

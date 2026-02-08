@@ -15,10 +15,11 @@ def main():
     e = e.withColumn("event_ts_rt", F.col("ingest_ts"))
 
     # ✅ watermark court + fenêtre courte -> résultats rapides
-    e = e.withWatermark("event_ts_rt", "10 minutes")
+    e = e.withWatermark("event_ts_rt", "1 minute")
+
 
     user_fs = (
-        e.groupBy(F.col("user_id"), F.window("event_ts_rt", "5 minutes"))
+        e.groupBy(F.col("user_id"), F.window("event_ts_rt", "1 minute"))
         .agg(
             F.count("*").alias("events_5m"),
             F.sum(F.when(F.col("event_type") == "view", 1).otherwise(0)).alias("views_5m"),
@@ -35,7 +36,7 @@ def main():
     )
 
     item_fs = (
-        e.groupBy(F.col("product_id"), F.window("event_ts_rt", "5 minutes"))
+        e.groupBy(F.col("product_id"), F.window("event_ts_rt", "1 minute"))
         .agg(
             F.count("*").alias("events_5m"),
             F.sum(F.when(F.col("event_type") == "purchase", 1).otherwise(0)).alias("purchases_5m"),
